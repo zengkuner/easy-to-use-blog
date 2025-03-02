@@ -22,13 +22,37 @@ Promise 构造函数接受一个函数作为参数，该函数的两个参数分
 当 Promise 执行的内容符合成功条件时，调用`resolve`函数，传给`then`的函数就是`resolve`函数，Promise 中只有执行了`resolve`，`then`函数才会执行。
 
 ```js
-Promise.resolve().then(() => {});
+Promise.resolve(1).then((res) => {
+  console.log(res); // 1
+});
+
+Promise.reject(1).then((res) => {
+  console.log(res);
+}); // Error
 ```
 
 #### 2. catch()
 
 当我们在 Promise 里面抛出异常，调用了`reject()`方法，传给`catch()`的函数就是`reject()`方法。
 
+```js
+Promise.reject(1).catch((res) => {
+  console.log(res); // 1
+});
 ```
 
-```
+#### 3. all()
+
+- all 方法可以完成并行任务，它接收一个数组，数组的每一项都是一个`Promise`对象。
+- 当数组中所有的`Promise`对象的状态都达到`resolve`的时候，`all()`方法就`resolve`。
+- 当有数组中只要有一个`reject`，则`all()`就`reject`，如果有多个`Promise`对象发生了`reject`，则`all()`方法获得执行速度最快的那个`reject`。
+- 当 all 方法`resolve`时，返回结果的顺序和执行时间无关，和传入顺序一致。
+
+#### 4. race()
+
+- `race()`方法和`all()`方法一样，接收的参数是每一个都是`Promise`对象的数组，但是与`all`不同的是，不管执行结果，只跟 Promise 对象的执行速度有关，获得执行速度最快的那一个。
+- 如果执行速度一样快，则按传入顺序获得第一个的状态。
+
+#### 5. finally（）
+
+finally()方法用于指定不管 Promise 对象最后状态如何，都会执行的操作。

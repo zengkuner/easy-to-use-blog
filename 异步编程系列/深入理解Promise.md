@@ -56,3 +56,10 @@ Promise.reject(1).catch((res) => {
 #### 5. finally（）
 
 finally()方法用于指定不管 Promise 对象最后状态如何，都会执行的操作。
+
+<div class="color">这字是什么颜色呢？</div>
+<style>
+  .color {
+    color: red;
+  }
+</style>

@@ -63,3 +63,5 @@ finally()方法用于指定不管 Promise 对象最后状态如何，都会执�
     color: red;
   }
 </style>
+
+![图片](https://github.com/zengkuner/easy-to-use-blog/raw/master/images/test.png)

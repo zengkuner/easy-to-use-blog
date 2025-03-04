@@ -57,11 +57,48 @@ Promise.reject(1).catch((res) => {
 
 finally()方法用于指定不管 Promise 对象最后状态如何，都会执行的操作。
 
-<div class="color">这字是什么颜色呢？</div>
-<style>
-  .color {
-    color: red;
-  }
-</style>
+### 经典例题
 
-![图片](https://github.com/zengkuner/easy-to-use-blog/raw/master/images/test.png)
+利用 Promise 实现一个超时请求处理，当请求时长超过指定时长，则抛出请求超时的错误。
+
+```js
+// 请求函数
+const requestPromise = () => {
+  return fetch(
+    "https://www.google.com.hk/webhp?hl=en&ictx=2&sa=X&ved=0ahUKEwiNncfN5N7tAhXMXSsKHWGADO4QPQgI"
+  );
+};
+
+// 或者用定时器模拟请求函数
+const requestPromise = (delay) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("请求成功");
+    }, delay);
+  });
+};
+```
+
+```js
+// 超时处理函数
+const requestWithTimeout = (request, delay) => {
+  // 超时提醒
+  const timeoutPromise = new Promise((_, reject) => {
+    setTimeout(() => {
+      reject(new Error("请求超时"));
+    }, delay);
+  });
+  return Promise.race([request, timeoutPromise]);
+};
+```
+
+```js
+// 用法示例
+requestWithTimeout(requestPromise(2000), 1000)
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
